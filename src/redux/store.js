@@ -32,6 +32,7 @@ function* AddPlant(action) {
     try {
         yield axios.post("/api/plants", action.payload);
 
+        // refresh the DOM
         yield put({
             type: "FETCH_PLANTS",
             fetchPlants,
@@ -42,12 +43,29 @@ function* AddPlant(action) {
     }
 }
 
+function* deletePlant(action) {
+  try {
+    yield axios.delete(action.url);
+    
+    // refresh the DOM
+    yield put({
+      type: "FETCH_PLANTS",
+      fetchPlants,
+  });
+  } catch (error) {
+    console.log("we got ourselves an error in here.");
+    console.error(error);
+  }
+}
+
 function* rootSaga() {
     // call generator functions to dispatch to reducers.
 
     yield takeLatest("FETCH_PLANTS", fetchPlants);
 
     yield takeLatest("ADD_PLANT", AddPlant);
+
+    yield takeLatest("DELETE_PLANT", deletePlant);
 }
 
 const sagaMiddleware = createSagaMiddleware();

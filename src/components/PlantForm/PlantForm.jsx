@@ -31,8 +31,8 @@ const PlantForm = () => {
     };
     return (
         <div>
-            <h3>This is the form</h3>
-            <pre>{JSON.stringify(newPlant)}</pre>
+            <h3>Add a new plant to your garden!</h3>
+            {/* <pre>{JSON.stringify(newPlant)}</pre> */}
             <form onSubmit={addNewPlant}>
                 <label>
                     Name
