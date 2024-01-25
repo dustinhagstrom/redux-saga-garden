@@ -20,7 +20,7 @@ const plantList = (state = startingPlantArray, action) => {
     }
 };
 
-function* fetchPlants() {
+function* fetchPlants(action) {
     try {
         const allPlantsRes = yield axios.get("/api/plants");
 
@@ -34,10 +34,26 @@ function* fetchPlants() {
     }
 }
 
+function* AddPlant(action) {
+    try {
+        yield axios.post("/api/plants", action.payload);
+
+        yield put({
+            type: "FETCH_PLANTS",
+            fetchPlants,
+        });
+    } catch (error) {
+        console.log("we got ourselves an error in here.");
+        console.error(error);
+    }
+}
+
 function* rootSaga() {
     // call generator functions to dispatch to reducers.
 
     yield takeLatest("FETCH_PLANTS", fetchPlants);
+
+    yield takeLatest("ADD_PLANT", AddPlant);
 }
 
 const sagaMiddleware = createSagaMiddleware();
