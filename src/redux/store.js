@@ -4,17 +4,11 @@ import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { takeLatest, put } from "redux-saga/effects";
 
-// this startingPlantArray should eventually be removed
-const startingPlantArray = [
-    { id: 1, name: "Rose" },
-    { id: 2, name: "Tulip" },
-    { id: 3, name: "Oak" },
-];
 
-const plantList = (state = startingPlantArray, action) => {
+const plantList = (state = [], action) => {
     switch (action.type) {
-        case "ADD_PLANT":
-            return [...state, action.payload];
+        case "SET_PLANTS":
+            return action.payload;
         default:
             return state;
     }
